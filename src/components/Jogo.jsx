@@ -6,24 +6,30 @@ import forca4 from "../assets/forca4.png";
 import forca5 from "../assets/forca5.png";
 import forca6 from "../assets/forca6.png";
 
-const imgArray = [forca0,forca1,forca2,forca3,forca4,forca5,forca6];
+const imgArray = [forca0, forca1, forca2, forca3, forca4, forca5, forca6];
 
-export default function Jogo({ words, wordSelected, setWordSelected, wordScreen, setWordScreen, errorCount }) {
+export default function Jogo({ words, wordSelected, setWordSelected, wordScreen, lettersDisabled, setLettersDisabled, setWordScreen, errorCount, setErrorCount, endGame, setEndGame }) {
     function chooseWord() {
         function compareFunction() {
             return Math.random() - 0.5;
         }
         const randomWord = words.sort(compareFunction)[0];
+        console.log(randomWord);
         setWordSelected(randomWord.split(''));
         setWordScreen(randomWord.split('').map(l => '_').join(" "));
-        console.log(randomWord);
+        setEndGame([false, 'none']);
+
+        let newLettersDisabled = [];
+        setLettersDisabled(newLettersDisabled);
+        let newErrorCount = 0;
+        setErrorCount(newErrorCount);
     }
     return (
         <div className="jogo">
             <img src={imgArray[errorCount]} alt={forca0.substring(10, 16)} />
             <div className="container-word">
-                <button className="choose-word" onClick={chooseWord}> Escolher Palavra </button>
-                <div className="word">{wordScreen}</div>
+                <button className="choose-word" onClick={chooseWord} disabled={!endGame[0]}> Escolher Palavra </button>
+                <div className={`word ${endGame[1]==='lose'? 'w-lose':''} ${endGame[1]==='win'? 'w-win':''}`}>{wordScreen}</div>
             </div>
         </div>
     )
