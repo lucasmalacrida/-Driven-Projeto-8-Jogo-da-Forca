@@ -9,11 +9,23 @@ import palavras from "./palavras";
 
 export default function App() {
     const [wordSelected,setWordSelected] = useState([]);
+    const [wordScreen,setWordScreen] = useState("");
     const [errorCount,setErrorCount] = useState(0);
     return (
         <main>
-            <Jogo words={palavras} wordSelected={wordSelected} setWordSelected={setWordSelected} errorCount={errorCount} />
-            <Letras wordSelected={wordSelected} errorCount={errorCount} setErrorCount={setErrorCount} />
+            <Jogo
+                words={palavras}
+                wordSelected={wordSelected}
+                setWordSelected={setWordSelected}
+                wordScreen={wordScreen}
+                setWordScreen={setWordScreen}
+                errorCount={errorCount} />
+            <Letras
+                wordSelected={wordSelected}
+                wordScreen={wordScreen}
+                setWordScreen={setWordScreen}
+                errorCount={errorCount}
+                setErrorCount={setErrorCount} />
         </main>
     );
 }

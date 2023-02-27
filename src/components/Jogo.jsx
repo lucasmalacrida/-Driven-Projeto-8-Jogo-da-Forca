@@ -6,21 +6,24 @@ import forca4 from "../assets/forca4.png";
 import forca5 from "../assets/forca5.png";
 import forca6 from "../assets/forca6.png";
 
-export default function Jogo({words,wordSelected,setWordSelected,errorCount}) {
-    function chooseWord(){ 
-        function compareFunction(){ 
-            return Math.random() - 0.5; 
+const imgArray = [forca0,forca1,forca2,forca3,forca4,forca5,forca6];
+
+export default function Jogo({ words, wordSelected, setWordSelected, wordScreen, setWordScreen, errorCount }) {
+    function chooseWord() {
+        function compareFunction() {
+            return Math.random() - 0.5;
         }
-        let randomWord = words.sort(compareFunction)[0];
+        const randomWord = words.sort(compareFunction)[0];
         setWordSelected(randomWord.split(''));
+        setWordScreen(randomWord.split('').map(l => '_').join(" "));
+        console.log(randomWord);
     }
-    const word = wordSelected.map( l => '_' ).join(" ");
     return (
         <div className="jogo">
-            <img src={forca0} alt={forca0.substring(10, 16)} />
+            <img src={imgArray[errorCount]} alt={forca0.substring(10, 16)} />
             <div className="container-word">
                 <button className="choose-word" onClick={chooseWord}> Escolher Palavra </button>
-                <div className="word">{word}</div>
+                <div className="word">{wordScreen}</div>
             </div>
         </div>
     )

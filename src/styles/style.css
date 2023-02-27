@@ -6,6 +6,7 @@
 }
 
 button {
+    box-sizing: border-box;
     text-align: center;
     display: block;
 }
@@ -67,7 +68,7 @@ main {
 /* Letters -------------------------------------------------------------------------------- */
 .letras {
     margin: 64px auto 32px;
-    max-width: 710px;
+    max-width: 676px;
     display: flex;
     flex-wrap: wrap;
 }
