@@ -1,6 +1,8 @@
 import "./styles/reset.css";
 import "./styles/style.css";
 
+import palavras from "./palavras";
+
 import Jogo from "./components/Jogo";
 import Letras from "./components/Letras";
 
