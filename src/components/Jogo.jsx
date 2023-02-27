@@ -14,7 +14,6 @@ export default function Jogo({ words, wordSelected, setWordSelected, wordScreen,
             return Math.random() - 0.5;
         }
         const randomWord = words.sort(compareFunction)[0];
-        console.log(randomWord);
         setWordSelected(randomWord.split(''));
         setWordScreen(randomWord.split('').map(l => '_').join(" "));
         setEndGame([false, 'none']);
@@ -26,10 +25,10 @@ export default function Jogo({ words, wordSelected, setWordSelected, wordScreen,
     }
     return (
         <div className="jogo">
-            <img src={imgArray[errorCount]} alt={forca0.substring(10, 16)} />
+            <img src={imgArray[errorCount]} alt={forca0.substring(10, 16)} data-test="game-image"/>
             <div className="container-word">
-                <button className="choose-word" onClick={chooseWord} disabled={!endGame[0]}> Escolher Palavra </button>
-                <div className={`word ${endGame[1]==='lose'? 'w-lose':''} ${endGame[1]==='win'? 'w-win':''}`}>{wordScreen}</div>
+                <button className="choose-word" onClick={chooseWord} disabled={!endGame[0]} data-test="choose-word"> Escolher Palavra </button>
+                <div className={`word ${endGame[1]==='lose'? 'w-lose':''} ${endGame[1]==='win'? 'w-win':''}`} data-test="word" >{wordScreen}</div>
             </div>
         </div>
     )

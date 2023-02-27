@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 export default function Letras({ wordSelected, setWordSelected, wordScreen, setWordScreen, lettersDisabled, setLettersDisabled, errorCount, setErrorCount, endGame, setEndGame }) {
@@ -46,7 +44,8 @@ export default function Letras({ wordSelected, setWordSelected, wordScreen, setW
                             <button
                                 key={l}
                                 className={`letter ${lettersDisabled.includes(l) ? 'l-disabled' : ''}`}
-                                onClick={() => selectLetter(l)} disabled={lettersDisabled.includes(l)} >
+                                onClick={() => selectLetter(l)} disabled={lettersDisabled.includes(l)}
+                                data-test="letter" >
                                 {l.toUpperCase()}
                             </button>
                     )
@@ -63,7 +62,8 @@ export default function Letras({ wordSelected, setWordSelected, wordScreen, setW
                             <button
                                 key={l}
                                 className={"letter l-disabled"}
-                                onClick={() => selectLetter(l)} disabled={true}>
+                                onClick={() => selectLetter(l)} disabled={true}
+                                data-test="letter" >
                                 {l.toUpperCase()}
                             </button>
                     )
