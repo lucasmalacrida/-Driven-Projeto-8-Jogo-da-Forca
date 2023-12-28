@@ -1,75 +1,45 @@
-const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+import alfabeto from "../constants/alfabeto";
+import normalizeString from "../helpers/normalizeString";
 
-export default function Letras({ wordSelected, setWordSelected, wordScreen, setWordScreen, lettersDisabled, setLettersDisabled, errorCount, setErrorCount, endGame, setEndGame }) {
+export default function Letras({ wordSelected, setWordSelected, wordScreen, setWordScreen, lettersDisabled, setLettersDisabled, errorCount, setErrorCount, setEndGame }) {
     function selectLetter(l) {
         setLettersDisabled([...lettersDisabled, l]);
-        if (wordSelected.includes(l)) {
+        if (normalizeString(wordSelected.join('')).includes(l)) {
             let wordScreenArray = wordScreen.split(' ');
-            for (let i = 0; i < wordSelected.length; i++) {
-                if (wordSelected[i] === l) {
-                    wordScreenArray[i] = l;
-                }
-            }
+            wordSelected.forEach((letter,i) => {
+                if (normalizeString(letter) === l) wordScreenArray[i] = letter;
+            });
+
             let newWordScreen = wordScreenArray.join(" ");
             setWordScreen(newWordScreen);
-
             if (newWordScreen.includes('_') === false) {
-                let newEndGame = [true,'win'];
-                setEndGame(newEndGame);
-                let newWordSelected = [];
-                setWordSelected(newWordSelected);
+                setEndGame('win');
+                setWordSelected([]);
             }
         } else {
-            if (errorCount < 6) {
-                let newErrorCount = errorCount + 1;
-                setErrorCount(newErrorCount);
-            }
+            if (errorCount < 6) setErrorCount(errorCount + 1);
             if (errorCount === 5) {
-                let newWordScreen = wordSelected.join('');
-                setWordScreen(newWordScreen);
-                let newEndGame = [true,'lose'];
-                setEndGame(newEndGame);
-                let newWordSelected = [];
-                setWordSelected(newWordSelected);
+                setWordScreen(wordSelected.join(''));
+                setEndGame('lose');
+                setWordSelected([]);
             }
         }
     }
 
-    if (wordSelected.length !== 0) {
-        return (
-            <div className="letras">
-                {
-                    alfabeto.map(
-                        l =>
-                            <button
-                                key={l}
-                                className={`letter ${lettersDisabled.includes(l) ? 'l-disabled' : ''}`}
-                                onClick={() => selectLetter(l)} disabled={lettersDisabled.includes(l)}
-                                data-test="letter" >
-                                {l.toUpperCase()}
-                            </button>
-                    )
-                }
+    const isDisabledLetter = (l) => lettersDisabled.includes(l) || (wordSelected.length === 0);
 
-            </div>
-        )
-    } else {
-        return (
-            <div className="letras">
-                {
-                    alfabeto.map(
-                        l =>
-                            <button
-                                key={l}
-                                className={"letter l-disabled"}
-                                onClick={() => selectLetter(l)} disabled={true}
-                                data-test="letter" >
-                                {l.toUpperCase()}
-                            </button>
-                    )
-                }
-
-            </div>
-        )
-    }
+    return (
+        <div className="letras">
+            {alfabeto.map(l =>
+                <button
+                    key={l}
+                    className={`letter ${isDisabledLetter(l) ? 'l-disabled' : ''}`}
+                    disabled={isDisabledLetter(l)}
+                    onClick={() => selectLetter(l)}
+                    data-test="letter" >
+                    {l.toUpperCase()}
+                </button>
+            )}
+        </div>
+    )
 }

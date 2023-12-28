@@ -8,27 +8,27 @@ import forca6 from "../assets/forca6.png";
 
 const imgArray = [forca0, forca1, forca2, forca3, forca4, forca5, forca6];
 
-export default function Jogo({ words, wordSelected, setWordSelected, wordScreen, lettersDisabled, setLettersDisabled, setWordScreen, errorCount, setErrorCount, endGame, setEndGame }) {
+export default function Jogo({ palavras, setWordSelected, wordScreen, setLettersDisabled, setWordScreen, errorCount, setErrorCount, endGame, setEndGame, setGuessWord }) {
+    function compareFunction() {
+        return Math.random() - 0.5;
+    }
+
     function chooseWord() {
-        function compareFunction() {
-            return Math.random() - 0.5;
-        }
-        const randomWord = words.sort(compareFunction)[0];
+        const randomWord = palavras.sort(compareFunction)[0];
         setWordSelected(randomWord.split(''));
         setWordScreen(randomWord.split('').map(l => '_').join(" "));
-        setEndGame([false, 'none']);
-
-        let newLettersDisabled = [];
-        setLettersDisabled(newLettersDisabled);
-        let newErrorCount = 0;
-        setErrorCount(newErrorCount);
+        setLettersDisabled([]);
+        setErrorCount(0);
+        setEndGame(false);
+        setGuessWord('');
     }
+
     return (
         <div className="jogo">
-            <img src={imgArray[errorCount]} alt={forca0.substring(10, 16)} data-test="game-image"/>
+            <img src={imgArray[errorCount]} alt={forca0.substring(10, 16)} data-test="game-image" />
             <div className="container-word">
-                <button className="choose-word" onClick={chooseWord} disabled={!endGame[0]} data-test="choose-word"> Escolher Palavra </button>
-                <div className={`word ${endGame[1]==='lose'? 'w-lose':''} ${endGame[1]==='win'? 'w-win':''}`} data-test="word" >{wordScreen}</div>
+                <button className="choose-word" onClick={chooseWord} data-test="choose-word"> Escolher Palavra </button>
+                <div className={`word ${endGame}`} data-test="word" >{wordScreen}</div>
             </div>
         </div>
     )

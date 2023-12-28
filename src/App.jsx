@@ -1,43 +1,28 @@
+import { useState } from "react";
+
 import "./styles/reset.css";
 import "./styles/style.css";
 
-import { useState } from "react";
-
 import Jogo from "./components/Jogo";
 import Letras from "./components/Letras";
-import palavras from "./palavras";
+import Chute from "./components/Chute";
+import palavras from "./constants/palavras";
 
 export default function App() {
-    const [wordSelected,setWordSelected] = useState([]);
-    const [wordScreen,setWordScreen] = useState("");
+    const [wordSelected, setWordSelected] = useState([]);
+    const [wordScreen, setWordScreen] = useState("");
     const [lettersDisabled, setLettersDisabled] = useState([]);
-    const [errorCount,setErrorCount] = useState(0);
-    const [endGame,setEndGame] = useState([true,'none']);
+    const [errorCount, setErrorCount] = useState(0);
+    const [endGame, setEndGame] = useState(null);
+    const [guessWord, setGuessWord] = useState('');
+
+    const gameProps = { palavras, wordSelected, setWordSelected, wordScreen, setWordScreen, lettersDisabled, setLettersDisabled, errorCount, setErrorCount, endGame, setEndGame, guessWord, setGuessWord };
+
     return (
         <main>
-            <Jogo
-                words={palavras}
-                wordSelected={wordSelected}
-                setWordSelected={setWordSelected}
-                wordScreen={wordScreen}
-                setWordScreen={setWordScreen}
-                lettersDisabled={lettersDisabled}
-                setLettersDisabled={setLettersDisabled}
-                errorCount={errorCount}
-                setErrorCount={setErrorCount}
-                endGame={endGame}
-                setEndGame={setEndGame} />
-            <Letras
-                wordSelected={wordSelected}
-                setWordSelected={setWordSelected}
-                wordScreen={wordScreen}
-                setWordScreen={setWordScreen}
-                lettersDisabled={lettersDisabled}
-                setLettersDisabled={setLettersDisabled}
-                errorCount={errorCount}
-                setErrorCount={setErrorCount}
-                endGame={endGame}
-                setEndGame={setEndGame} />
+            <Jogo {...gameProps} />
+            <Letras {...gameProps} />
+            <Chute {...gameProps} />
         </main>
     );
 }
